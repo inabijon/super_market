@@ -1,0 +1,109 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-list>
+      <p class="text-end">
+        <span class="text-danger px-2" (click)="sidenav.toggle()">
+          <i class="fa-solid fa-square-xmark fa-2x"></i>
+        </span>
+      </p>
+      <mat-list-item><a routerLink="/admin/admin"><i class="fa-solid fa-user"></i> Admin Panel</a></mat-list-item>
+      <mat-list-item><a routerLink="/admin/admin-product"><i class="fa-solid fa-basket-shopping"></i> Products</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-user"><i class="fa-solid fa-users"></i> Users</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><a routerLink="/admin/admin-banner"><i class="fa-solid fa-images"></i> Banners</a></mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-contact"><i class="fa-solid fa-comment"></i> Messages</a>
+        &nbsp; &nbsp;
+        <div class="badge badge-danger bg-danger">{{ messages.length }}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <div class="grid-container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-sm-between">
+        <p>
+          <button mat-button (click)="sidenav.toggle()">
+            <i class="fas fa-bars"></i>
+          </button>
+        </p>
+        <p class="fw-bold fs-5 text-uppercase">ADMIN Dashboard</p>
+      </div>
+
+      <form action="">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="search" name="search" id="search" class="form-control" placeholder="Search"
+              aria-describedby="helpId" />
+            <button class="btn btn-danger btn-sm px-3">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class=" py-3">
+      <h1 class="text-center fw-bold text-danger">MESSAGES</h1>
+
+      <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="100%" *ngFor="let message of messages"
+            class="d-flex align-items-stretch">
+            <mat-card class="mat-elevation-z4">
+              <mat-card-header class="d-flex justify-content-between">
+                <mat-card-title class="fw-bold text-info">{{
+                  message.name
+                  }}</mat-card-title>
+              </mat-card-header>
+              <h3 class="text-success">{{ message.email }}</h3>
+              <h3 class="text-success">{{'+' + message.number }}</h3>
+              <mat-card-content class="py-3">
+                <h3 class="mat-body-1 text-uppercase text-danger fw-bold">
+                  {{ message.subject }}
+                </h3>
+                <p>
+                  {{ message.message }}
+                </p>
+                <div class="text-muted text-end"> {{ message.date | date }} </div>
+              </mat-card-content>
+              <mat-card-actions class="pb-2">
+                <div class="text-end">
+                  <a href="mailto:{{ message.email }}" class="text-decoration-none">
+                    <button mat-stroked-button color="primary" matTooltip="Send Message via Email">
+                      <i class="fa-solid fa-envelope"></i>
+                    </button>
+                  </a>
+                  &nbsp;
+                  <a href="https://api.whatsapp.com/send?phone={{message.number}}" target="_blank">
+                    <button mat-stroked-button color="primary" matTooltip="Send Message via whatsapp">
+                      <i class="fa-brands fa-whatsapp text-success"></i>
+                    </button>
+                  </a>
+                  &nbsp;
+                  <a href="https://t.me/+{{message.number}}" target="_blank">
+                    <button mat-stroked-button color="primary" matTooltip="Send Message via Telegram">
+                      <i class="fa-brands fa-telegram"></i>
+                    </button>
+                  </a>
+
+                  <button mat-stroked-button color="accent" matTooltip="Delete this Message"
+                    (click)="deleteMessage(message)">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+          <!-- Media object -->
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>

@@ -1,0 +1,45 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+.mat-sidenav {
+  width: 300px;
+}
+.mat-list-item a {
+  text-decoration: none;
+  color: #00c58a;
+}
+a .fa-whatsapp {
+  text-decoration: none;
+  color: #00c58a;
+}
+a:hover {
+  color: #123532;
+}
+.content {
+  padding: 16px;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+.mat-card {
+  width: 100%;
+}

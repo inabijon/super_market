@@ -1,0 +1,108 @@
+<div class="container">
+  <!--Section: Contact v.2-->
+  <section class="mb-4">
+    <!--Section heading-->
+    <h2 class="h1-responsive font-weight-bold text-center my-4 text-uppercase fw-bold">
+      Contact us
+    </h2>
+    <!--Section description-->
+    <p class="text-center w-responsive mx-auto mb-5">
+      Do you have any questions? Please do not hesitate to contact us directly.
+      Our team will come back to you within a matter of hours to help you.
+    </p>
+
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-md-9 mb-md-0 mb-5">
+        <form id="contact-form" #contact="ngForm" (ngSubmit)="contactUs(contact)">
+          <!--Grid row-->
+          <div class="row my-3">
+            <!--Grid column-->
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Your name" name="name" minlength="3" #name="ngModel" ngModel required>
+              </mat-form-field>
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="example@example.com" minlength="3" name="email" #email="ngModel" ngModel
+                  required>
+              </mat-form-field>
+            </div>
+            <!--Grid column-->
+          </div>
+          <!--Grid row-->
+
+          <div class="row my-3">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Phone Number</mat-label>
+                <input matInput placeholder="+998xxxxxxxx" minlength="5" name="number" #number="ngModel" ngModel
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <!--Grid row-->
+          <div class="row my-3">
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Subject</mat-label>
+                <input matInput placeholder="Issue in Shopping check out" minlength="3" name="subject"
+                  #subject="ngModel" ngModel required>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Grid row-->
+
+          <!--Grid row-->
+          <div class="row my-3">
+            <!--Grid column-->
+            <div class="col-md-12">
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Comment</mat-label>
+                <textarea matInput placeholder="There is some problem...." rows="5" minlength="5" #message="ngModel"
+                  ngModel name="message" required></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <!--Grid row-->
+          <div class="text-end">
+            <button mat-stroked-button color="warn" type="submit" class="fw-bold px-5 text-uppercase">Send</button>
+          </div>
+        </form>
+
+        <div class="status"></div>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-3 text-center">
+        <ul class="list-unstyled mb-0">
+          <li>
+            <i class="fas fa-map-marker-alt fa-2x"></i>
+            <p>Urgench, CA 94126, UZBEKISTAN</p>
+          </li>
+
+          <li>
+            <i class="fas fa-phone mt-4 fa-2x"></i>
+            <p>+ 99 897 361 91 77</p>
+          </li>
+
+          <li>
+            <i class="fas fa-envelope mt-4 fa-2x"></i>
+            <p>supermarket@gmail.com</p>
+          </li>
+        </ul>
+      </div>
+      <!--Grid column-->
+    </div>
+  </section>
+  <!--Section: Contact v.2-->
+</div>

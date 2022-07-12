@@ -1,0 +1,527 @@
+<!-- * ----------------- top of the home ------------------------>
+<div
+  class="px-4 py-5 text-center bg-color-home d-flex align-items-center justify-content-center"
+>
+  <!--*---------------------h1 text--------------------------------- -->
+  <div class="col-lg-8 mx-auto">
+    <h1 class="head-h1">Groceries Delivered in 90 Minute</h1>
+    <div>
+      <p class="py-3 fw-bold head-text">
+        Get your healthy foods & snacks delivered at your doorsteps all day
+        everyday
+      </p>
+    </div>
+    <!-- * ------------------- Search box------------------------- -->
+    <mat-card
+      id="search-box"
+      style="background: transparent; border: none; box-shadow: none;"
+    >
+      <div class="input-group mt-3 mb-1 SEARCH">
+        <input
+          type="search"
+          class="form-control py-2 px-3"
+          #search="ngModel"
+          ngModel
+          name="search"
+          (keyup)="searchProduct(search.value)"
+          placeholder="Search your product from here"
+        />
+        <button
+          (click)="searchProduct(search.value)"
+          class="fw-bold"
+          mat-flat-button
+          color="primary"
+          id="basic-addon1"
+        >
+          <i class="fas fa-search"></i>
+          &nbsp;
+          <span class="search">Search</span>
+        </button>
+      </div>
+
+      <span *ngIf="isLoading" class="loader"></span>
+
+      <ng-container *ngIf="!isLoading" class="animate">
+        <div
+          *ngIf="search.value.length > 0; else NoResult"
+          class="search-box px-3"
+        >
+          <span *ngIf="searchResultMessage">{{ searchResultMessage }}</span>
+          <div
+            *ngFor="let searchResult of SearchProducts"
+            class="d-flex align-items-center"
+          >
+            <div class="flex-shrink-0">
+              <img
+                data-bs-toggle="modal"
+                data-bs-target="#searchData"
+                (click)="getById(searchResult)"
+                src="{{ searchResult.imageUrl }}"
+                width="50px"
+                alt="{{ searchResult.name }}"
+              />
+            </div>
+            <div
+              data-bs-toggle="modal"
+              data-bs-target="#searchData"
+              (click)="getById(searchResult)"
+              class="flex-grow-1 ms-3 text-start"
+            >
+              {{ searchResult.name }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #NoResult></ng-template>
+    </mat-card>
+
+    <!-- * ------------------Result Search--------------------- -->
+    <mat-card-footer>
+      <div id="products">
+        <div class="product" *ngFor="let searchResult of searchData">
+          <span class="mat-body-1 fw-bold">{{ searchResult.name }}</span>
+        </div>
+      </div>
+    </mat-card-footer>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="searchData"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5
+          class="modal-title fw-bold fs-4 text-danger text-center"
+          id="exampleModalLabel"
+        >
+          {{ getByIdProduct.name }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-0 bg-light position-relative">
+          <div class="col-md-6 mb-md-0 p-md-4">
+            <div class="text-center">
+              <img
+                class="img-fluid modelImageSize"
+                src="{{ getByIdProduct.imageUrl }}"
+                alt="{{ getByIdProduct.name }}"
+              />
+            </div>
+          </div>
+          <div class="col-md-6 p-4 ps-md-0">
+            <div class="px-3">
+              <div class="flex-grow-1 ms-3 mat-body-1 fs-6">
+                {{ getByIdProduct.description }}
+              </div>
+              <br />
+              <br />
+              <h2 *ngIf="!getByIdProduct.newPrice">
+                Price: {{ getByIdProduct.price | currency }}
+              </h2>
+              <h2 *ngIf="getByIdProduct.newPrice">
+                Price: {{ getByIdProduct.newPrice | currency }}
+              </h2>
+              <button
+                (click)="addToCart(getByIdProduct)"
+                mat-raised-button
+                color="warn"
+                class="text-uppercase fw-bold addCart"
+              >
+                Add to cart
+                <i class="fas fa-shopping-cart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          mat-stroked-button
+          color="primary"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- *----------------------- BANNER ------------------------------ -->
+<div class="container-fluid border">
+  <div class="row">
+    <div class="col-md-12 py-4">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let slide of slidesStore">
+          <ng-template carouselSlide id="{{ slide.id }}">
+            <div class="px-2 py-1">
+              <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title" />
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+  </div>
+</div>
+
+<!-- * --------------------------products---------------------- -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- *------------------------SIDE NAV------------------------------ -->
+    <div class="col-md-3 mt-3">
+      <div class="sticky-top">
+        <mat-expansion-panel [expanded]="isFirst" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title
+              class="d-flex align-items-center justify-content-between panel-color"
+            >
+              <div>
+                <i class="fas fa-apple-alt"></i>
+                Menu
+              </div>
+              <i class="fa-solid fa-caret-down"></i>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'allProducts' }"
+              (click)="allProducts()"
+              class="fw-bold text-uppercase"
+            >
+              All Products
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'fruits' }"
+              (click)="Fruits()"
+              class="fw-normal text-uppercase"
+            >
+              Fruits
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'vegetables' }"
+              (click)="Vegetables()"
+              class="fw-normal text-uppercase"
+            >
+              Vegetables
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'MeatAndPoultry' }"
+              (click)="MeatAndPoultry()"
+              class="fw-normal text-uppercase"
+            >
+              Meat and poultry
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'fish' }"
+              (click)="Fish()"
+              class="fw-normal text-uppercase"
+            >
+              Fish and seafood
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'grains' }"
+              (click)="Grains()"
+              class="fw-normal text-uppercase"
+            >
+              Grains, nuts and seeds
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'eggs' }"
+              (click)="Eggs()"
+              class="fw-normal text-uppercase"
+            >
+              Eggs
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'DairyFoods' }"
+              (click)="DairyFoods()"
+              class="fw-normal text-uppercase"
+            >
+              Dairy Foods
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'Alcoholic' }"
+              (click)="Alcoholic()"
+              class="fw-normal text-uppercase"
+            >
+              Alcoholic drinks
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'NonAlcoholic' }"
+              (click)="NonAlcoholic()"
+              class="fw-normal text-uppercase"
+            >
+              Non-alcoholic drinks
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'HotDrinks' }"
+              (click)="HotDrinks()"
+              class="fw-normal text-uppercase"
+            >
+              Hot drinks
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item
+              routerLink="/"
+              [queryParams]="{ category: 'JuiceAndPlantDrinks' }"
+              (click)="JuiceAndPlantDrinks()"
+              class="fw-normal text-uppercase"
+            >
+              Juice and plant drinks
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+        </mat-expansion-panel>
+      </div>
+    </div>
+
+    <!-- *----------------------MAIN PRODUCTS------------------------------- -->
+    <div class="col-md-9 py-4 bg-product-color">
+      <div class="py-3">
+        <div
+          class="btn-group"
+          role="group"
+          aria-label="Basic mixed styles example"
+        >
+          <button
+            type="button"
+            (click)="sortOnlySaleProducts()"
+            class="btn btn-sm bg-white border border-danger fw-bold"
+          >
+            <img src="../../assets/Home/sorting/sale.png" width="35px" alt="" />
+            Sale Products
+          </button>
+          <button
+            type="button"
+            (click)="sortOnlyNewProducts()"
+            class="btn btn-sm bg-white border border-danger fw-bold"
+          >
+            New Products
+            <img src="../../assets/Home/sorting/new.png" width="35px" alt="" />
+          </button>
+        </div>
+      </div>
+      <div class="content">
+        <div class="mx-auto">
+          <mat-spinner
+            color="warn"
+            class="mx-auto"
+            *ngIf="isLoading"
+          ></mat-spinner>
+        </div>
+        <div *ngIf="!isLoading" fxLayout="row wrap" fxLayoutGap="16px grid">
+          <div
+            fxFlex="25%"
+            fxFlex.xs="100%"
+            fxFlex.sm="33%"
+            *ngFor="let food of foodProducts"
+            class="d-flex align-items-stretch"
+          >
+            <mat-card
+              *ngIf="!isGetProducts"
+              (click)="getById(food)"
+              class="mat-elevation-z4 position-relative pb-3 main-card w-100"
+            >
+              <!-- !---------------PRODUCT IMAGE------------------ -->
+              <div
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                mat-card-image
+                [style.backgroundImage]="'url(' + food.imageUrl + ')'"
+                class="bg-card pt-5"
+              ></div>
+              <!--!---------------NEW BADGE----------------------- -->
+              <img
+                *ngIf="food.newBadge"
+                width="50px"
+                src="../../assets/Home/new tag.png"
+                class="badge badge-new position-absolute d-flex align-items-center justify-content-center fw-bold"
+              />
+
+              <!-- !-----------------------SALE BADGE--------------------  -->
+              <img
+                *ngIf="food.saleBadge"
+                src="../../assets/Home/sale.png"
+                width="25px"
+                class="badge badge-sale position-absolute d-flex align-items-center justify-content-center fw-bold"
+              />
+
+              <!-- *------------------CARD PRODUCT-------------------------------- -->
+              <div class="card-f">
+                <mat-card-content>
+                  <!-- ! ------------------ CARD TITLE------------------- -->
+                  <mat-card-title
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="fw-bolder panel-color cart-title pt-2 fs-5 text-center"
+                  >
+                    {{ food.name | uppercase }}
+                  </mat-card-title>
+                  <!-- !-------------CARD PRICE---------------------- -->
+                  <div
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="d-flex align-items-center justify-content-center"
+                  >
+                    <span class="fw-bold text-uppercase fs-6">Price:</span>
+                    &nbsp;
+                    <p
+                      class="text-end fw-bold fs-6 pt-2"
+                      [style.color]="food.saleBadge ? '#34568b' : '#000'"
+                      [style.text-decoration]="
+                        food.saleBadge ? 'line-through' : 'none'
+                      "
+                    >
+                      {{ food.price | currency }}
+                    </p>
+                    &nbsp;&nbsp;
+                    <!-- !----------------SALE PRICE ------------------------------ -->
+                    <p *ngIf="food.saleBadge" class="fs-5 text-danger fw-bold">
+                      {{ food.newPrice | currency }}
+                    </p>
+                  </div>
+                </mat-card-content>
+
+                <!-- !-------------------ADD TO CARD BUTTON------------------- -->
+                <mat-card-actions
+                  class="d-flex align-items-center justify-content-around"
+                >
+                  <button
+                    (click)="addToCart(food)"
+                    mat-raised-button
+                    color="primary"
+                    class="text-uppercase fw-bold addCart"
+                  >
+                    Add to cart
+                    <i class="fas fa-shopping-cart"></i>
+                  </button>
+                </mat-card-actions>
+              </div>
+            </mat-card>
+
+            <!-- ******************* MODAL ************************ -->
+            <!-- ! Modal -->
+            <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-scrollable">
+                <div class="mx-auto">
+                  <mat-spinner
+                    color="warn"
+                    class="mx-auto"
+                    *ngIf="isLoading"
+                  ></mat-spinner>
+                </div>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5
+                      class="modal-title fw-bold fs-4 text-danger text-center"
+                      id="exampleModalLabel"
+                    >
+                      {{ getByIdProduct.name }}
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row g-0 bg-light position-relative">
+                      <div class="col-md-6 mb-md-0 p-md-4">
+                        <div class="text-center">
+                          <img
+                          class="img-fluid modelImageSize"
+                            src="{{ getByIdProduct.imageUrl }}"
+                            alt="{{ getByIdProduct.name }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6 p-4 ps-md-0">
+                        <div class="px-3">
+                          <div class="flex-grow-1 ms-3 mat-body-1 fs-6">
+                            {{ getByIdProduct.description }}
+                          </div>
+                          <br />
+                          <br />
+                          <h2 *ngIf="!getByIdProduct.newPrice">
+                            Price: {{ getByIdProduct.price | currency }}
+                          </h2>
+                          <h2 *ngIf="getByIdProduct.newPrice">
+                            Price: {{ getByIdProduct.newPrice | currency }}
+                          </h2>
+                          <button
+                            (click)="addToCart(getByIdProduct)"
+                            mat-raised-button
+                            color="warn"
+                            class="text-uppercase fw-bold addCart"
+                          >
+                            Add to cart
+                            <i class="fas fa-shopping-cart"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      mat-stroked-button
+                      color="primary"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      ok
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

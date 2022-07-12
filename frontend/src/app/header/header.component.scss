@@ -1,0 +1,131 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.navbar-brand {
+  color: #161e6c;
+  font-weight: 900;
+  font-size: 25px;
+  cursor: pointer;
+  span {
+    color: #00c58a;
+  }
+}
+.bag-icon {
+  color: #00c58a !important;
+}
+.form-select {
+  border-color: #ebedf0;
+  color: #00c58a;
+}
+
+.form-select:focus {
+  border-color: #ebedf0;
+  outline: 0;
+  box-shadow: none;
+}
+
+.nav-item {
+  padding: 0 10px;
+  font-weight: 500;
+  .nav-link {
+    &:hover {
+      color: #00c58a !important;
+    }
+  }
+}
+ul {
+  li {
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-toggler {
+    display: flex !important;
+  }
+  #dropdown {
+    padding: 10px;
+    transition: all 1s ease-in-out;
+    z-index: 9999;
+  }
+  .navbar-light .navbar-nav .nav-link {
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .navbar-toggler {
+    border: none;
+  }
+
+  .items-number {
+    font-size: 16px !important;
+  }
+
+  @media (max-width: 400px) {
+    .navbar-toggler {
+      display: flex !important;
+    }
+    #dropdown {
+      padding: 10px;
+      transition: all 1s ease-in-out;
+    }
+    .show {
+      transition: all 1s ease-in-out;
+    }
+    .navbar-light .navbar-nav .nav-link {
+      color: rgba(0, 0, 0, 0.55);
+    }
+    .navbar-toggler {
+      border: none;
+    }
+    .navbar-brand {
+      font-size: 20px;
+    }
+    .items-number {
+      font-size: 16px !important;
+    }
+    #dropdown {
+      position: absolute;
+      top: 80px;
+      left: auto;
+      background-color: #00c58a;
+      transition: all 1s ease;
+
+      width: 90%;
+      margin: 0 auto;
+
+      ul {
+        li {
+          a {
+            color: #fff !important;
+            text-decoration: none;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .navbar-toggler:focus {
+      text-decoration: none;
+      outline: 0;
+      box-shadow: none !important;
+    }
+  }
+  .navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: none !important;
+  }
+  @media (max-width: 295px) {
+    .dropdown-menu {
+      min-width: 250px;
+      border: 2px solid #00c58a;
+      padding: 2px;
+      margin: 7px;
+      margin-top: 11px;
+      position: absolute;
+      left: -150px;
+      top: 18px;
+    }
+  }
+}

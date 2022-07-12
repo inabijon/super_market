@@ -1,0 +1,102 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-list>
+      <p class="text-end">
+        <span class="text-danger px-2" (click)="sidenav.toggle()">
+          <i class="fa-solid fa-square-xmark fa-2x"></i>
+        </span>
+      </p>
+      <mat-list-item><a routerLink="/admin/admin"><i class="fa-solid fa-user"></i> Admin Panel</a></mat-list-item>
+      <mat-list-item><a routerLink="/admin/admin-product"><i class="fa-solid fa-basket-shopping"></i> Products</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-user"><i class="fa-solid fa-users"></i> Users</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><a routerLink="/admin/admin-banner"><i class="fa-solid fa-images"></i> Banners</a></mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-contact"><i class="fa-solid fa-comment"></i> Messages</a>
+        &nbsp; &nbsp;
+        <div class="badge badge-danger bg-danger">{{ messages.length }}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <div class="grid-container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-sm-between">
+        <p>
+          <button mat-button (click)="sidenav.toggle()">
+            <i class="fas fa-bars"></i>
+          </button>
+        </p>
+        <p class="fw-bold fs-5 text-uppercase">ADMIN Dashboard</p>
+      </div>
+
+      <form action="">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="search" name="search" id="search" class="form-control" placeholder="Search"
+              aria-describedby="helpId" />
+            <button class="btn btn-danger btn-sm px-3">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="container-fluid bg-theme py-3">
+      <div class="row">
+        <div class="col-md-12 px-sm-2">
+          <h2 class="text-center text-uppercase text-danger table-responsive">
+            All Users
+          </h2>
+          <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
+          </mat-form-field>
+          <div class="mx-auto">
+            <mat-spinner color="warn" class="mx-auto" *ngIf="isGetProducts"></mat-spinner>
+          </div>
+          <div class="TABLE">
+            <table *ngIf="!isGetProducts" mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+              <!-- <ng-container matColumnDef="_id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>No</th>
+                <td mat-cell *matCellDef="let note">{{ note._id }}</td>
+              </ng-container> -->
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let note">{{ note.name }}</td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell id="description" *matCellDef="let note">{{ note.email }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="isAdmin">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>isAdmin</th>
+                <td mat-cell *matCellDef="let note">{{ note.isAdmin }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="regDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.regDate | date: "dd-MM-yyyy" }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+          <mat-paginator [pageSizeOptions]="[15, 25, 35, 55]" aria-label="Select page of users"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>

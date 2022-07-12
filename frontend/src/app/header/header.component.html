@@ -1,0 +1,130 @@
+<mat-toolbar style="background-color: #ff6e61d3;">
+  <mat-toolbar-row>
+    <!-- ! HEADER BRAND -->
+    <span routerLink="/" class="text-white fw-bold">Super Market</span>
+    <span class="example-spacer"></span>
+
+    <!-- ! SHOPPING CART -->
+
+    <div class="SHOPPING">
+      <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+        class="text-white"
+      >
+        <i class="fa-solid fa-cart-shopping fs-6"></i>
+        <span class="fw-bold items-number">( {{ items.length }} )</span>
+      </button>
+      <mat-menu #menu="matMenu" class="shopping-menu">
+        <mat-list role="list">
+          <h3 class="fw-bold text-center text-uppercase text-danger">
+            Shopping List
+          </h3>
+          <mat-list-item *ngFor="let item of items" role="listitem">
+            <div
+              class="d-flex align-content-center justify-content-between my-2 w-100"
+            >
+              <h4 class="fw-normal">
+                {{ item.name | titlecase }}
+              </h4>
+              &nbsp; &nbsp;
+              <div class="d-flex align-items-center justify-content-between">
+                <input
+                  class="form-control"
+                  [(ngModel)]="item.qtyTotal"
+                  [ngModelOptions]="{ standalone: false }"
+                  min="1"
+                  type="number"
+                  style="width: 90px;"
+                  value="{{ item.qtyTotal }}"
+                  name="item"
+                  (change)="changeSubtotal(item, i)"
+                />
+                <button
+                  mat-icon-button
+                  color="warn"
+                  class="text-end d-flex align-items-center justify-content-center"
+                  (click)="removeFromCart(item)"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <br />
+          <mat-list-item>
+            <div class="fw-bold mt-3">
+              Order Total:
+              <span class="font-weight-bold my-3">{{ total | currency }}</span>
+
+              <div class="btn-group mt-3">
+                <button mat-flat-button color="primary" (click)="clearCart()">
+                  Clear Items
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  mat-raised-button
+                  color="warn"
+                  routerLink="/check-out"
+                  [queryParams]="{ category: 'check-out' }"
+                >
+                  Check Out
+                </button>
+              </div>
+              <br />
+              <br />
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-menu>
+    </div>
+
+    <!-- ! MAIN MENU CONTACT  LOGIN LOGOUT ADMIN -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="sidebar"
+      aria-label="Example icon-button with a menu"
+    >
+      <mat-icon class="text-white">more_vert</mat-icon>
+    </button>
+    <mat-menu #sidebar="matMenu" class="text-start py-3 px-3">
+      <button mat-button>
+        <a
+          class="text-dark text-decoration-none"
+          routerLink="/contact"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Contact
+        </a>
+      </button>
+      <br />
+      <ng-container *ngIf="userIsAuthenticated">
+        <button mat-button color="accent">
+          <a class="text-dark text-decoration-none" (click)="logout()">
+            logout
+          </a>
+        </button>
+      </ng-container>
+      <ng-container *ngIf="!userIsAuthenticated">
+        <button mat-button>
+          <a class="text-dark text-decoration-none" routerLink="/auth/login">
+            Login
+          </a>
+        </button>
+      </ng-container>
+      <br />
+      <!-- !ADMIN OR NOT ADMIN BUTTON -->
+      <ng-container *ngIf="isAdmin && userIsAuthenticated">
+        <button mat-button color="warn">
+          <a class="text-danger text-decoration-none" routerLink="/admin/admin">
+            Admin
+          </a>
+        </button>
+      </ng-container>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>

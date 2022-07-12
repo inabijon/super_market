@@ -1,0 +1,603 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-list>
+      <p class="text-end">
+        <span class="text-danger px-2" (click)="sidenav.toggle()">
+          <i class="fa-solid fa-square-xmark fa-2x"></i>
+        </span>
+      </p>
+      <mat-list-item>
+        <a routerLink="/admin/admin">
+          <i class="fa-solid fa-user"></i>
+          Admin Panel
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a routerLink="/admin/admin-product">
+          <i class="fa-solid fa-basket-shopping"></i>
+          Products
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-user">
+          <i class="fa-solid fa-users"></i>
+          Users
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-banner">
+          <i class="fa-solid fa-images"></i>
+          Banners
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-contact">
+          <i class="fa-solid fa-comment"></i>
+          Messages
+        </a>
+        &nbsp; &nbsp;
+        <div class="badge badge-danger bg-danger">{{ messages.length }}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <div class="grid-container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-sm-between">
+        <p>
+          <button mat-button (click)="sidenav.toggle()">
+            <i class="fas fa-bars"></i>
+          </button>
+        </p>
+        <p class="fw-bold fs-5 text-uppercase">ADMIN Dashboard</p>
+      </div>
+
+      <form action="">
+        <div class="form-group">
+          <div class="input-group">
+            <input
+              type="search"
+              name="search"
+              id="search"
+              class="form-control"
+              placeholder="Search"
+              aria-describedby="helpId"
+            />
+            <button class="btn btn-danger btn-sm px-3">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div #target class="col-md-8 bg-white py-3 px-2">
+          <h1 class="text-danger text-uppercase text-center fw-bold">
+            {{ TITLE_PRODUCT }}
+          </h1>
+          <form
+            #form="ngForm"
+            (ngSubmit)="onSubmitProduct(form)"
+            class="example-form"
+          >
+            <input
+              type="hidden"
+              ngModel
+              #_id="ngModel"
+              name="_id"
+              value="Apple"
+              [(ngModel)]="productId"
+              [ngModelOptions]="{ standalone: false }"
+            />
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Product name</mat-label>
+              <input
+                matInput
+                type="text"
+                ngModel
+                required
+                #name="ngModel"
+                name="name"
+                value="Apple"
+                [(ngModel)]="productName"
+                [ngModelOptions]="{ standalone: false }"
+                maxlength="18"
+              />
+              <mat-hint align="end">{{ name.value?.length || 0 }}/18</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Product Image Url</mat-label>
+              <input
+                matInput
+                type="text"
+                ngModel
+                required
+                #imageUrl="ngModel"
+                name="imageUrl"
+                [(ngModel)]="productImageUrl"
+                [ngModelOptions]="{ standalone: false }"
+              />
+            </mat-form-field>
+            <div class="d-sm-flex align-items-center justify-content-center">
+              <mat-form-field
+                class="example-full-width mx-1 pb-1"
+                appearance="fill"
+              >
+                <mat-label>Product price</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  ngModel
+                  required
+                  #price="ngModel"
+                  name="price"
+                  [(ngModel)]="productPrice"
+                  [ngModelOptions]="{ standalone: false }"
+                />
+                <mat-hint align="end">
+                  Here write product's 1kg price ($)
+                </mat-hint>
+              </mat-form-field>
+              <mat-form-field
+                class="example-full-width mx-1 pb-1"
+                appearance="fill"
+              >
+                <mat-label>Total</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  ngModel
+                  required
+                  #total="ngModel"
+                  name="total"
+                  [(ngModel)]="productTotal"
+                  [ngModelOptions]="{ standalone: false }"
+                />
+                <mat-hint align="end">Here write total in base (kg)</mat-hint>
+              </mat-form-field>
+              <mat-form-field
+                class="example-full-width mx-1 pb-1"
+                appearance="fill"
+              >
+                <mat-label>Category</mat-label>
+                <mat-select
+                  ngModel
+                  #categoryName="ngModel"
+                  [(ngModel)]="productCategory"
+                  name="categoryName"
+                >
+                  <mat-option
+                    *ngFor="let category of selectCategory"
+                    [value]="category.name"
+                  >
+                    {{ category.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+              </mat-form-field>
+            </div>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Product Description</mat-label>
+              <textarea
+                matInput
+                ngModel
+                #description="ngModel"
+                [ngModelOptions]="{ standalone: false }"
+                name="description"
+                placeholder="Ex. It makes me feel..."
+                maxlength="1000"
+                required
+                [(ngModel)]="productDescription"
+              ></textarea>
+              <mat-hint align="end">
+                {{ description.value?.length || 0 }}/1000
+              </mat-hint>
+            </mat-form-field>
+
+            <mat-checkbox
+              name="newBadge"
+              ngModel
+              #isNew="ngModel"
+              class="example-margin fw-bold"
+              [ngModelOptions]="{ standalone: false }"
+              [(ngModel)]="productBadgeNew"
+            >
+              New Product
+            </mat-checkbox>
+            <br />
+            <mat-checkbox
+              color="primary"
+              ngModel
+              #isChecked="ngModel"
+              name="saleBadge"
+              class="example-margin fw-bold"
+              [ngModelOptions]="{ standalone: false }"
+              [(ngModel)]="productBadgeSale"
+            >
+              Sale Product
+            </mat-checkbox>
+            <div>
+              <mat-form-field
+                class="example-full-width mx-1 mt-2"
+                appearance="fill"
+              >
+                <mat-label>Product Sale Price</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  ngModel
+                  #salePrice="ngModel"
+                  name="newPrice"
+                  [(ngModel)]="productBadgeSalePrice"
+                  [ngModelOptions]="{ standalone: false }"
+                  [disabled]="!isChecked.value"
+                />
+              </mat-form-field>
+            </div>
+            <br />
+            <br />
+            <input
+              type="submit"
+              value="Save"
+              *ngIf="hideSaveButton"
+              class="btn btn-danger btn-sm px-md-4 py-2 text-uppercase fw-normal"
+              [disabled]="!form.valid"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              (click)="resetForm(form)"
+              value="Clear"
+              class="btn btn-dark btn-sm px-md-4 py-2 text-uppercase fw-normal"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              *ngIf="showUpdateButton"
+              (click)="updateProduct(form)"
+              value="Update"
+              class="btn btn-success btn-sm px-md-4 py-2 text-uppercase fw-normal"
+            />
+            &nbsp; &nbsp;
+            <input
+              type="button"
+              *ngIf="showUpdateButton"
+              (click)="Reset(form)"
+              value="Back"
+              class="btn btn-warning btn-sm px-md-4 py-2 text-uppercase fw-normal"
+            />
+          </form>
+        </div>
+        <div class="col-md-3 py-3 d-flex align-items-center">
+          <mat-card
+            class="mat-elevation-z4 position-relative mat-card-height w-100"
+          >
+            <div
+              mat-card-image
+              [style.backgroundImage]="'url(' + imageUrl.value + ')'"
+              class="bg-card"
+            ></div>
+            <img
+              *ngIf="isNew.value"
+              width="50px"
+              src="../../../assets/Home/new tag.png"
+              class="badge badge-new position-absolute d-flex align-items-center justify-content-center fw-bold"
+            />
+
+            <img
+              *ngIf="isChecked.value"
+              src="../../../assets/Home/sale.png"
+              width="25px"
+              class="badge badge-sale position-absolute d-flex align-items-center justify-content-center fw-bold"
+            />
+            <div class="card-f">
+              <mat-card-content>
+                <mat-card-title
+                  class="fw-bolder panel-color pt-2 fs-5 text-center"
+                >
+                  {{ name.value | uppercase }}
+                </mat-card-title>
+                <div class="d-flex align-items-center justify-content-center">
+                  <p
+                    class="text-end fw-bold fs-6 pt-2"
+                    [style.text-decoration]="
+                      isChecked.value ? 'line-through' : 'none'
+                    "
+                  >
+                    {{ price.value | currency }}
+                  </p>
+                  &nbsp;&nbsp;
+                  <p *ngIf="isChecked.value" class="fs-4 text-danger">
+                    {{ salePrice.value | currency }}
+                  </p>
+                </div>
+              </mat-card-content>
+              <mat-card-actions
+                class="d-flex align-items-center justify-content-around pb-3"
+              >
+                <button class="btn btn-danger btn-sm text-uppercase fw-bold">
+                  Add to Cart
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              </mat-card-actions>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid py-3">
+      <div class="row">
+        <div class="col-md-12 px-sm-2">
+          <h2 class="text-center text-uppercase text-danger">All Products</h2>
+          <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input
+              matInput
+              (keyup)="applyFilter($event)"
+              placeholder="Ex. Apple"
+              #input
+            />
+          </mat-form-field>
+          <mat-spinner
+            color="warn"
+            class="mx-auto"
+            *ngIf="isGetProducts"
+          ></mat-spinner>
+          <div class="TABLE">
+            <mat-table
+              matTableExporter
+              #exporter="matTableExporter"
+              [hiddenColumns]="[0]"
+              *ngIf="!isGetProducts"
+              [dataSource]="dataSource"
+              matSort
+              (matSortChange)="announceSortChange($event)"
+              class="mat-elevation-z8"
+            >
+              <ng-container matColumnDef="imageUrl">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Image Url
+                </th>
+                <td
+                  mat-cell
+                  *matCellDef="let note"
+                  (click)="openDialogWithTemplateRef(myDialog)"
+                  (click)="getById(note)"
+                >
+                  <img
+                    src="{{ note.imageUrl }}"
+                    class="matTableImage"
+                    [alt]="note.imageUrl"
+                  />
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td
+                  (click)="openDialogWithTemplateRef(myDialog)"
+                  (click)="getById(note)"
+                  mat-cell
+                  class="fw-bold"
+                  *matCellDef="let note"
+                >
+                  {{ note.name | titlecase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  description
+                </th>
+                <td
+                  (click)="openDialogWithTemplateRef(myDialog)"
+                  (click)="getById(note)"
+                  id="description"
+                  mat-cell
+                  *matCellDef="let note"
+                >
+                  {{ note.description | lowercase }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.price | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="rating">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  rating
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  <i class="fas fa-star text-warning"></i>
+                  {{ note.rating }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="categoryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  categoryName
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.categoryName }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="newBadge">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  newBadge
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.newBadge }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="saleBadge">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  saleBadge
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.saleBadge }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="oldPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  oldPrice
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.oldPrice | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="newPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  newPrice
+                </th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.newPrice | currency }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>total</th>
+                <td mat-cell *matCellDef="let note">
+                  {{ note.total + 'kg' }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>edit</th>
+                <td mat-cell *matCellDef="let note">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button
+                      (click)="scroll()"
+                      mat-menu-item
+                      (click)="productEdit(note)"
+                    >
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteProduct(note)">
+                      <mat-icon>delete</mat-icon>
+                      <span>delete</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ******************* MODAL ************************ -->
+      <ng-template #myDialog>
+        <h2 matDialogTitle>{{ getByIdProduct.name | titlecase }}</h2>
+        <mat-dialog-content>
+          <div class="text-center">
+            <img
+              class="modelImageSize img-fluid"
+              src="{{ getByIdProduct.imageUrl }}"
+              alt="{{ getByIdProduct.name }}"
+            />
+          </div>
+          <br />
+          <p class="mat-body-1 dialog-style">
+            {{ getByIdProduct.description }}
+          </p>
+          <br />
+          <h3>
+            Category:
+            <span class="fw-bold text-dark">
+              {{ getByIdProduct.categoryName }}
+            </span>
+          </h3>
+          <h3>
+            Price:
+            <span class="fw-bold text-dark">
+              {{ getByIdProduct.price | currency }}
+            </span>
+          </h3>
+          <h3 *ngIf="getByIdProduct.newPrice">
+            Sale Price:
+            <span class="fw-bold text-danger">
+              {{ getByIdProduct.newPrice | currency }}
+            </span>
+          </h3>
+          <h3>
+            Total:
+            <span class="fw-bold text-dark">{{ getByIdProduct.total }}</span>
+          </h3>
+        </mat-dialog-content>
+        <mat-dialog-actions align="end">
+          <button mat-flat-button matDialogClose color="primary">
+            Dismiss
+          </button>
+          <button
+            mat-flat-button
+            matDialogClose
+            color="warn"
+            (click)="deleteProduct(getByIdProduct)"
+          >
+            Delete
+          </button>
+          <button
+            mat-flat-button
+            matDialogClose
+            color="accent"
+            (click)="productEdit(getByIdProduct)"
+            (click)="scroll()"
+          >
+            Update
+          </button>
+        </mat-dialog-actions>
+      </ng-template>
+
+      <mat-paginator
+        class="w-100"
+        [pageSizeOptions]="[5, 15, 30]"
+        showFirstLastButtons
+      ></mat-paginator>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="py-3">
+              <div class="btn-group">
+                <!-- !Button -->
+                <button
+                  mat-stroked-button
+                  color="primary"
+                  (click)="
+                    exporter.exportTable('csv', {
+                      fileName: 'All-Products',
+                      Props: { Author: 'Nabijon' }
+                    })
+                  "
+                >
+                  <i class="fa-solid fa-file-csv"></i>
+                  Excel
+                </button>
+                &nbsp; &nbsp;
+                <button
+                  mat-stroked-button
+                  color="warn"
+                  (click)="exporter.exportTable('json')"
+                >
+                  Json
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>

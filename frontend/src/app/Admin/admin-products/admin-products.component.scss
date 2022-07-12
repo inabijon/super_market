@@ -1,0 +1,166 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.dashboard-card-content {
+  text-align: center;
+}
+
+.mat-sidenav {
+  width: 300px;
+}
+
+a {
+  text-decoration: none;
+  color: #00c58a;
+}
+
+a:hover {
+  color: #123532;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.panel-color {
+  color: #00c58a;
+}
+
+.bg-product-color {
+  background-color: #f3f4f6;
+}
+
+.badge-new {
+  top: -22px;
+  right: -25px;
+  width: 100px;
+  height: auto;
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.badge-sale {
+  top: -40px;
+  left: -20px;
+  width: 110px;
+  height: auto;
+  opacity: 1;
+  transform: rotateZ(-10deg);
+}
+
+.bg-card {
+  width: 100%;
+  height: 130px;
+  margin: 0 auto;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  .card-f {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.mat-card {
+  height: 285px;
+}
+
+.cart-top {
+  height: 200px;
+}
+
+h1 {
+  color: #424242 !important;
+}
+
+.TABLE {
+  width: 100%;
+  overflow-y: scroll !important;
+
+}
+
+th,
+td {
+  overflow: hidden;
+  width: 200px;
+  text-overflow: inherit;
+  white-space: wrap;
+  line-height: 20px;
+}
+
+#description {
+  display: -webkit-box !important;
+  display: flex;
+  align-items: stretch;
+  padding: 5px 0;
+  justify-content: start;
+  max-width: 200px !important;
+  height: 80px !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.625;
+}
+
+.dialog-style {
+  width: 500px;
+}
+
+.mat-dialog-content {
+  overflow-x: hidden;
+}
+
+.modelImageSize {
+  width: 230px;
+}
+ .matTableImage {
+    width: 70px;
+  }
+
+@media (max-width: 700px) {
+
+  th.mat-header-cell,
+  td.mat-cell,
+  td.mat-footer-cell {
+    padding: 0 10px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+}
+
+@media (max-width: 500px) {
+  .dialog-style {
+    width: 200px;
+  }
+
+  .mat-dialog-content {
+    overflow-x: auto;
+  }
+
+  .modelImageSize {
+    width: 180px !important;
+  }
+  .matTableImage {
+    width: 50px;
+    padding-top: 5px;
+  }
+}

@@ -1,0 +1,92 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-list>
+      <p class="text-end">
+        <span class="text-danger px-2" (click)="sidenav.toggle()">
+          <i class="fa-solid fa-square-xmark fa-2x"></i>
+        </span>
+      </p>
+      <mat-list-item><a routerLink="/admin/admin"><i class="fa-solid fa-user"></i> Admin Panel</a></mat-list-item>
+      <mat-list-item><a routerLink="/admin/admin-product"><i class="fa-solid fa-basket-shopping"></i> Products</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-user"><i class="fa-solid fa-users"></i> Users</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item><a routerLink="/admin/admin-banner"><i class="fa-solid fa-images"></i> Banners</a></mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>
+        <a routerLink="/admin/admin-contact"><i class="fa-solid fa-comment"></i> Messages</a>
+        &nbsp; &nbsp;
+        <div class="badge badge-danger bg-danger">{{ messages.length }}</div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-sidenav>
+  <div class="grid-container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-sm-between">
+        <p>
+          <button mat-button (click)="sidenav.toggle()">
+            <i class="fas fa-bars"></i>
+          </button>
+        </p>
+        <p class="fw-bold fs-5 text-uppercase">ADMIN Dashboard</p>
+      </div>
+
+      <form action="">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="search" name="search" id="search" class="form-control" placeholder="Search"
+              aria-describedby="helpId" />
+            <button class="btn btn-danger btn-sm px-3">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="container-fluid bg-theme py-3">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="text-center text-uppercase text-danger">Daily Purchase</h2>
+          <div echarts [options]="chartOption" class="demo-chart bg-white"></div>
+        </div>
+        <div class="col-md-4">
+          <h2 class="text-center text-uppercase text-danger">Users Online</h2>
+          <div class="p-1">
+            <mat-card class="cart-top">
+              <div class="cart-chart">
+                <h1 class="fw-bold text-success">TOTAL USERS</h1>
+                <div class="d-flex align-items-center justify-content-between">
+                  <img src="../../../assets/admin/growth-chart.png" class="img-fluid opacity-75" width="100px" alt="" />
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <h1 class="fw-bold text-card opacity-75">
+                    {{ _TOTAL_USERS }}
+                  </h1>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div class="p-1">
+            <mat-card class="cart-top">
+              <div class="cart-chart">
+                <h1 class="fw-bold text-success">FOODS AMOUNT</h1>
+                <div class="d-flex align-items-center justify-content-between">
+                  <img src="../../../assets/admin/analytics.png" class="img-fluid opacity-75 image" width="100px"
+                    alt="" />
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <h1 class="fw-bold text-card opacity-75 text-danger">
+                    {{ _TOTAL_AMOUNT | currency: "USD" }}
+                  </h1>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-sidenav-container>

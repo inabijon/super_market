@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MONGO_ATLAS_PW": "973619177",
+        "JWT_KEY": "foodDrinkMarket_jwtPrivateKey"
+    }
+}
