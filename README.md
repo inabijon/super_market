@@ -1,4 +1,4 @@
 # super_market
 
-<img src="https://www.awesomescreenshot.com/image/30000570?key=d2e0a2ef1b100fbeebb54850bfeff90d" />
+<img src="https://github.com/inabijon/super_market/blob/master/Super%20Market%20(1).png" width="100%" />
 
