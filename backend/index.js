@@ -16,15 +16,8 @@ const contact = require("./routers/contact");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-// if (!config.get("jwtPrivateKey")) {
-//   console.error("SERIOUS ERROR: ENVIRONMENT IS NOT FIND");
-//   process.exit(1);
-// }
-// ********** mongodb connection ************//
-//mongodb+srv://Nabijon:<password>@supermarket.agkyt.mongodb.net/?retryWrites=true&w=majority
-//mongodb://localhost:27017/food_drinks_market
 mongoose
-  .connect("mongodb+srv://Nabijon:973619177@supermarket.agkyt.mongodb.net/?retryWrites=true&w=majority")
+  .connect("mongodb+srv://Nabijon:<PASSWORD SECRET>@supermarket.agkyt.mongodb.net/?retryWrites=true&w=majority")
   .then(() => {
     console.log("MongoDB is connected....");
   })
